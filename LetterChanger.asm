@@ -17,17 +17,17 @@
 
 ; ------ datovy segment ----------------------------
 
-               .data
-buffer: 	   .space 100                         					; vstupni buffer
+                 .data
+buffer: 	 .space 100                         					; vstupni buffer
 
 ; parametricke bloky musi byt zarovnane na dword
-               .align 2                           					; zarovnani adresy
+                .align 2                           					; zarovnani adresy
 			     
-textt:     	   .long buffer                       					; parametricky blok 2
+textt:      	.long buffer                       					; parametricky blok 2
 
 ; stack musi byt zarovnany na word
                .align 1                           					; zarovnani adresy
-          	   .space 100                        					; stack
+               .space 100                        					; stack
 stck:                                        	  					; konec stacku + 1
 
 ; ------ kodovy segment ----------------------------
@@ -38,7 +38,7 @@ stck:                                        	  					; konec stacku + 1
 			   
 			   
 clear:											;Subrutina pro vycisteni registru
-				mov.l	#0,	ER0
+				mov.l	#0, ER0
 				mov.l	#0, ER1
 				mov.l	#0, ER2
 				mov.l	#0, ER3
@@ -49,75 +49,75 @@ clear:											;Subrutina pro vycisteni registru
 		
 print:	
 				mov.w 	#PUTS,R0                  		   	 ; 24bitovy PUTS
-              	mov.l 	#textt,ER1                  					 ; adr. param. bloku do ER1
-               	jsr 	@syscall
+              			mov.l 	#textt,ER1                  			 ; adr. param. bloku do ER1
+               			jsr 	@syscall
 				rts
 
 	
 change_low:										; zmena maleho znaku na velkyy
 				subx.b	#32,R3L
 				mov.b	R3L,@ER2
-				mov.w	#0,	E4
-				jmp		end_change	
+				mov.w	#0, E4
+				jmp	end_change	
 			
 change_high:										; zmena velkeho znaku ma maly
 				addx.b	#32,R3L
 				mov.b	R3L,@ER2
-				mov.w	#0,	E4
-				jmp		end_change	
+				mov.w	#0, E4
+				jmp	end_change	
 	
 letter_low:										; podminka pro maly znak
 				cmp.b	R3L, R6H
-				bpl		change_low
-				jmp		end_change	
+				bpl	change_low
+				jmp	end_change	
 			
 letter_high:										; podminka pro velky znak
 				cmp.b	R3L, R5H
-				bpl		change_high
-				jmp		end_change	
+				bpl	change_high
+				jmp	end_change	
 
 check_letters:										; hlavni podminka pro znaky
 				cmp.b	R3L, R6L
-				bmi		letter_low
+				bmi	letter_low
 				cmp.b	R3L, R5L
-				bmi		letter_high
+				bmi	letter_high
 			
 cycle:											; hlavní cyklus(subrutina) programu
 			
 				mov.b	@ER2,R3L
 				cmp.b	R3L, R4L
-				beq		print
+				beq	print
 				cmp.b	R3L, R4H
-				beq		end_set_space
+				beq	end_set_space
 				cmp.w	E4, E3
-				beq		check_letters
+				beq	check_letters
 			
 			
 end_change:										; ukonceni zmeny(konec cyklu)
-				inc.l	#1,	ER2
-				mov.w	#0,	E4
-				jmp		cycle
+				inc.l	#1, ER2
+				mov.w	#0, E4
+				jmp	cycle
 			
 end_set_space:										; ukonceni cyklu s nastavenim mezery
-				inc.l	#1,	ER2
+				inc.l	#1, ER2
 				mov.w	#1, E4
-				jmp		cycle
+				jmp	cycle
 				rts
 				
 
-_start:			jsr		@clear
+_start:				jsr	@clear
 				mov.l	#stck,ER7
 				mov.l	#textt,ER2
 
 				
 				
 				
-               	mov.w 	#GETS,R0                    ; 24bitovy GETS
-               	mov.l 	#textt,ER1                  ; adr. param. bloku do ER1
-               	jsr 	@syscall
+               			mov.w 	#GETS,R0                    			; 24bitovy GETS
+               			mov.l 	#textt,ER1                  			; adr. param. bloku do ER1
+               			jsr 	@syscall
 				
 				mov.l	@ER2,ER2					;ziskani adresy bufferu z "pointeru"
-				mov.w	#1,	 E3
+				mov.w	#1,  E3
 			
 				mov.b	#10, R4L					;indikace konce zadavaneho textu (NL line feed)
 				mov.b	#32, R4H					;mezera pro oddeleni slov
@@ -135,6 +135,6 @@ _start:			jsr		@clear
 			   
 			   
 
-loop:    		jmp @loop                          				; konec vypoctu
+loop:    			jmp	@loop                          				; konec vypoctu
                .end
 	       
