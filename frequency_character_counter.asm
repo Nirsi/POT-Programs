@@ -1,3 +1,7 @@
+; --- Vygenerování histogramu ze zadaného textu ---
+; ---
+; --- Autor: Patrik Janoušek - PapiCZ
+; ---
 		.h8300s
 
 		.equ syscall,0x1FF00               ; simulated IO area
