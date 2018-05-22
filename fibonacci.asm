@@ -1,5 +1,6 @@
 ; --- Vypocet a vypis 25 clenu fibonnaciho posloupnosti ---
 ; ---
+; --- Autor: Jakub Vítek - Sognus
 ; ---
 		.h8300s
 		
