@@ -1,4 +1,7 @@
-;   prevod malych pismen na zacatku slov na velka a vice versa
+; --- prevod malych pismen na zacatku slov na velka a vice versa ---
+; ---
+; --- Autor: Jan Novák - EnrichSilen
+; ---
                .h8300s
 
                .equ syscall,0x1FF00              				 	; simulated IO area
