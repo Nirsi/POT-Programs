@@ -1,6 +1,6 @@
 ; --- prevod malych pismen na zacatku slov na velka a vice versa ---
 ; ---
-; --- Autor: Jan Novák - EnrichSilen
+; --- Autor: Jan Novák - Enrich
 ; ---
                .h8300s
 
